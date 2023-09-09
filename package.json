@@ -1,20 +1,21 @@
 {
-    "name": "buncordbot",
-    "module": "index.ts",
-    "type": "module",
-    "devDependencies": {
-        "bun-types": "latest"
-    },
-    "peerDependencies": {
-        "typescript": "^5.0.0"
-    },
-    "dependencies": {
-        "colorette": "^2.0.20",
-        "discord.js": "^14.13.0"
-    },
-    "scripts": {
-        "start": "bun run /src",
-        "dev:hot": "bun --hot /src",
-        "dev:watch": "bun --watch /src"
-    }
+  "name": "buncordbot",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "bun-types": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "colorette": "^2.0.20",
+    "discord.js": "^14.13.0",
+    "valibot": "^0.14.0"
+  },
+  "scripts": {
+    "start": "bun run /src",
+    "dev:hot": "bun --hot /src",
+    "dev:watch": "bun --watch /src"
+  }
 }
