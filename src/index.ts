@@ -5,7 +5,7 @@ import { reloadGlobalSlashCommands } from "./handlers/command.handler";
 import config from "../config.toml";
 
 const client = new Client({
-  intents: ["Guilds"],
+  intents: ["Guilds", "GuildVoiceStates"],
 });
 
 console.time(color.blueBright("Bot is ready"));

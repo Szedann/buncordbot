@@ -9,8 +9,13 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
+    "@discordjs/opus": "^0.9.0",
+    "@discordjs/voice": "^0.16.0",
     "colorette": "^2.0.20",
     "discord.js": "^14.13.0",
+    "ffmpeg-static": "^5.2.0",
+    "libsodium-wrappers": "^0.7.11",
+    "sodium": "^3.0.2",
     "valibot": "^0.14.0"
   },
   "scripts": {
