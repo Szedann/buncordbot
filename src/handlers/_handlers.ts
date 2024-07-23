@@ -8,5 +8,5 @@ export type Handler = (client: Client) => unknown;
 export const Handlers: Handler[] = [
   commandHandler,
   buttonHandler,
-  //   voiceHandler,
+  voiceHandler,
 ];

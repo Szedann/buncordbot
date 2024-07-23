@@ -22,14 +22,17 @@ export class Button<ArgsType extends BaseSchema<any, any>> {
   constructor(id: string) {
     this.id = id;
     if (buttonMap.has(id)) throw Error(`Button ${id} is already defined`);
-    buttonMap.set(id, this as unknown as Button<BaseSchema<any, any>>);
+    buttonMap.set(id, this as unknown as Button<BaseSchema>);
   }
   setArgs(args: ArgsType) {
     this.args = args;
     return this;
   }
   onPress(
-    handler: (interaction: ButtonInteraction, args: Output<ArgsType>) => unknown
+    handler: (
+      interaction: ButtonInteraction,
+      args: Output<ArgsType>,
+    ) => unknown,
   ) {
     this._onPress = handler;
     return this;
@@ -37,7 +40,7 @@ export class Button<ArgsType extends BaseSchema<any, any>> {
 
   button(
     data: Partial<InteractionButtonComponentData>,
-    args: Output<ArgsType>
+    args: Output<ArgsType>,
   ): ButtonBuilder {
     const button = new ButtonBuilder({
       ...data,

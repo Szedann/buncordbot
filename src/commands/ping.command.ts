@@ -19,7 +19,7 @@ export const pingCommand: Command = {
           deleteButton
             .button({}, null)
             .setLabel("Delete")
-            .setStyle(ButtonStyle.Danger)
+            .setStyle(ButtonStyle.Danger),
         ),
       ],
     });

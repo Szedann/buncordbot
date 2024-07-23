@@ -1,10 +1,13 @@
 import * as color from "colorette";
 import { Client, EmbedBuilder, time, inlineCode } from "discord.js";
 import { Handlers } from "./handlers/_handlers";
-import { reloadGlobalSlashCommands } from "./handlers/command.handler";
+import {
+  reloadGlobalSlashCommands,
+  reloadGuildSlashCommands,
+} from "./handlers/command.handler";
 import config from "../config.toml";
 
-const client = new Client({
+export const client = new Client({
   intents: ["Guilds", "GuildVoiceStates"],
 });
 
@@ -13,8 +16,8 @@ client.on("ready", async (client) => {
   console.timeEnd(color.blueBright("Bot is ready"));
   console.log(
     `Authenticated as ${color.cyanBright(client.user.tag)} ${color.gray(
-      client.user.toString()
-    )}`
+      client.user.toString(),
+    )}`,
   );
 
   if (!config.status_channel_id) return;
@@ -49,6 +52,7 @@ for (const handler of Handlers) {
   handler(client);
 }
 
-await reloadGlobalSlashCommands();
+if (config.guild_id) await reloadGuildSlashCommands(config.guild_id);
+else await reloadGlobalSlashCommands();
 
-client.login(process.env.DISCORD_TOKEN);
+client.login(Bun.env.DISCORD_TOKEN);
