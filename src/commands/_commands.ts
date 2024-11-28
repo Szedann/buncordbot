@@ -1,12 +1,5 @@
-import { Command } from "../handlers/command.handler";
-import { errorCommand } from "./error.command";
+import type { Command } from "../handlers/command.handler";
 import { joinCommand } from "./join.command";
-import { pingCommand } from "./ping.command";
-import { playStreamCommand } from "./playStream.command";
+import { playCommand } from "./play.command";
 
-export const Commands: Command[] = [
-  pingCommand,
-  errorCommand,
-  joinCommand,
-  playStreamCommand,
-];
+export const Commands: Command[] = [joinCommand, playCommand];

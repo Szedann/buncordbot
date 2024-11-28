@@ -1,4 +1,4 @@
-import { Colors, EmbedBuilder, InteractionReplyOptions } from "discord.js";
+import { Colors, EmbedBuilder, type InteractionReplyOptions } from "discord.js";
 
 export const ResponseTypes = {
   Error: {

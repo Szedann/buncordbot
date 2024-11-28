@@ -1,5 +1,5 @@
-import { VoiceBasedChannel } from "discord.js";
-import { Handler } from "./_handlers";
+import type { VoiceBasedChannel } from "discord.js";
+import type { Handler } from "./_handlers";
 import {
   VoiceConnectionStatus,
   getVoiceConnection,
@@ -79,18 +79,24 @@ export default class GuildVoiceManager {
     });
     return connection;
   }
-  play(resource: AudioResource) {
-    const connection = getVoiceConnection(this.guildId);
+  async play(resource: AudioResource, channel?: VoiceBasedChannel) {
+    const connection = channel
+      ? this.join(channel)
+      : getVoiceConnection(this.guildId);
     if (!connection) return false;
     if (resource.metadata) console.log(resource.metadata);
     this.player.play(resource);
     this.currentResource = resource;
-    resource.playStream.on("end", () => {
-      this.currentResource = undefined;
-    });
-    resource.playStream.on("close", () => {
-      this.currentResource = undefined;
-    });
+    return new Promise(resolve=>{
+      resource.playStream.on("end", () => {
+        this.currentResource = undefined;
+        resolve(null)
+      });
+      resource.playStream.on("close", () => {
+        this.currentResource = undefined;
+        resolve(null)
+      });
+    })
   }
   pause() {
     return this.player.pause();
@@ -108,7 +114,6 @@ export default class GuildVoiceManager {
 }
 
 export const voiceHandler: Handler = async () => {
-  console.log(
-    bgWhite("Voice dependency report\n") + gray(generateDependencyReport()),
-  );
+  console.log(bgWhite("Voice dependency report"));
+  console.log(gray(generateDependencyReport()));
 };

@@ -5,7 +5,7 @@ const inter = nullType();
 
 export const deleteButton = new Button<typeof inter>("delete")
   .setArgs(inter)
-  .onPress((interaction) => {
+  .onPress(interaction => {
     if (interaction.user.id != interaction.message.interaction?.user.id) return;
     interaction.message.delete();
   });

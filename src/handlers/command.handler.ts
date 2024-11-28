@@ -1,17 +1,15 @@
 import {
   CommandInteraction,
   REST,
-  RESTGetAPIOAuth2CurrentApplicationResult,
+  type RESTGetAPIOAuth2CurrentApplicationResult,
   Routes,
   SlashCommandBuilder,
-  SlashCommandOptionsOnlyBuilder,
+  type SlashCommandOptionsOnlyBuilder,
 } from "discord.js";
-import { Handler } from "./_handlers";
+import type { Handler } from "./_handlers";
 import { Commands } from "../commands/_commands";
 import * as color from "colorette";
 import { response, ResponseTypes } from "../utils/commands";
-
-if (!process.env.DISCORD_TOKEN) throw Error("Discord token not specified");
 
 const rest = new REST({ version: "10" }).setToken(process.env.DISCORD_TOKEN);
 
@@ -22,7 +20,7 @@ export interface Command {
 }
 
 const commandMap = new Map<string, Command>(
-  Commands.map((cmd) => [cmd.data.name, cmd]),
+  Commands.map(cmd => [cmd.data.name, cmd]),
 );
 console.log(color.bgWhite("Command List:"));
 for (const command of commandMap) {
@@ -32,12 +30,12 @@ for (const command of commandMap) {
 
 console.log();
 
-export const commandHandler: Handler = (client) => {
-  client.on("interactionCreate", (interaction) => {
+export const commandHandler: Handler = client => {
+  client.on("interactionCreate", async interaction => {
     if (!interaction.isCommand()) return;
     if (!commandMap.has(interaction.commandName)) return;
     try {
-      commandMap.get(interaction.commandName)!.execute(interaction);
+      await commandMap.get(interaction.commandName)!.execute(interaction);
     } catch (error) {
       console.error(error);
       (interaction.replied ? interaction.followUp : interaction.reply)(
@@ -60,7 +58,7 @@ export async function reloadGlobalSlashCommands() {
     )) as RESTGetAPIOAuth2CurrentApplicationResult;
 
     await rest.put(Routes.applicationCommands(appId), {
-      body: Commands.map((commandList) => commandList.data.toJSON()),
+      body: Commands.map(commandList => commandList.data.toJSON()),
     });
 
     console.timeEnd(color.yellowBright("Reloaded global commands"));
@@ -78,7 +76,7 @@ export async function reloadGuildSlashCommands(guildId: string) {
     )) as RESTGetAPIOAuth2CurrentApplicationResult;
 
     await rest.put(Routes.applicationGuildCommands(appId, guildId), {
-      body: Commands.map((commandList) => commandList.data.toJSON()),
+      body: Commands.map(commandList => commandList.data.toJSON()),
     });
 
     console.timeEnd(color.yellowBright("Reloaded guild commands"));

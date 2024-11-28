@@ -1,5 +1,5 @@
 import { GuildMember, SlashCommandBuilder, channelMention } from "discord.js";
-import { Command } from "../handlers/command.handler";
+import type { Command } from "../handlers/command.handler";
 import GuildVoiceManager from "../handlers/voice.handler";
 import { response, ResponseTypes } from "../utils/commands";
 
